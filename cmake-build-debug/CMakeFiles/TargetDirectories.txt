@@ -1,0 +1,3 @@
+G:/LearningCG/cmake-build-debug/CMakeFiles/LearningCG.dir
+G:/LearningCG/cmake-build-debug/CMakeFiles/edit_cache.dir
+G:/LearningCG/cmake-build-debug/CMakeFiles/rebuild_cache.dir
