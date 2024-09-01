@@ -17,4 +17,14 @@ typedef struct {
 
 extern OrientedBoundingBox GenerateOBB(const std::vector<Vertex>& vertices, const std::vector<Triangle>& triangles);
 
+
+typedef struct {
+    glm::vec4 basis[3];
+    glm::vec4 size;
+    glm::vec4 center;
+} OrientedBoundingBoxStd430;
+
+extern OrientedBoundingBoxStd430 OBB2OBBStd430(const OrientedBoundingBox& obb);
+
+
 #endif //LEARNINGCG_OBB_H

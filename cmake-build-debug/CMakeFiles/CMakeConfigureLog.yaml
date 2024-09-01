@@ -157,3 +157,119 @@ events:
         
       exitCode: 0
 ...
+
+---
+events:
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "D:/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/FindOpenMP.cmake:219 (try_compile)"
+      - "D:/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/FindOpenMP.cmake:483 (_OPENMP_GET_FLAGS)"
+      - "C:/Users/wmy/.vcpkg-clion/vcpkg/scripts/buildsystems/vcpkg.cmake:859 (_find_package)"
+      - "CMakeLists.txt:35 (find_package)"
+    description: "Detecting C OpenMP compiler info"
+    directories:
+      source: "G:/LearningCG/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-ezaz1u"
+      binary: "G:/LearningCG/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-ezaz1u"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      VCPKG_APPLOCAL_DEPS: "ON"
+      VCPKG_TARGET_TRIPLET: "x64-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Users/wmy/.vcpkg-clion/vcpkg"
+    buildResult:
+      variable: "OpenMP_COMPILE_RESULT_C_openmp"
+      cached: true
+      stdout: |
+        Change Dir: G:/LearningCG/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-ezaz1u
+        
+        Run Build Command(s):D:/JetBrains/CLion 2023.2.2/bin/ninja/win/x64/ninja.exe -v cmTC_d9e47 && [1/2] "D:\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\cl.exe"  /nologo   /DWIN32 /D_WINDOWS -openmp /Ob0 /Od /RTC1 -MDd -Zi /showIncludes /FoCMakeFiles\\cmTC_d9e47.dir\\OpenMPTryFlag.c.obj /FdCMakeFiles\\cmTC_d9e47.dir\\ /FS -c G:\\LearningCG\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-ezaz1u\\OpenMPTryFlag.c
+        [2/2] cmd.exe /C "cd . && "D:\\JetBrains\\CLion 2023.2.2\\bin\\cmake\\win\\x64\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_d9e47.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests  -- "D:\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\link.exe" /nologo CMakeFiles\\cmTC_d9e47.dir\\OpenMPTryFlag.c.obj  /out:cmTC_d9e47.exe /implib:cmTC_d9e47.lib /pdb:cmTC_d9e47.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cmd.exe /C "cd /D G:\\LearningCG\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-ezaz1u && C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -noprofile -executionpolicy Bypass -file C:/Users/wmy/.vcpkg-clion/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary G:/LearningCG/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-ezaz1u/cmTC_d9e47.exe -installedDir C:/Users/wmy/.vcpkg-clion/vcpkg/installed/x64-windows/debug/bin -OutVariable out""
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "D:/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/FindOpenMP.cmake:219 (try_compile)"
+      - "D:/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/FindOpenMP.cmake:483 (_OPENMP_GET_FLAGS)"
+      - "C:/Users/wmy/.vcpkg-clion/vcpkg/scripts/buildsystems/vcpkg.cmake:859 (_find_package)"
+      - "CMakeLists.txt:35 (find_package)"
+    description: "Detecting CXX OpenMP compiler info"
+    directories:
+      source: "G:/LearningCG/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-cdat5s"
+      binary: "G:/LearningCG/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-cdat5s"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /EHsc"
+      CMAKE_CXX_FLAGS_DEBUG: "/Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      VCPKG_APPLOCAL_DEPS: "ON"
+      VCPKG_TARGET_TRIPLET: "x64-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Users/wmy/.vcpkg-clion/vcpkg"
+    buildResult:
+      variable: "OpenMP_COMPILE_RESULT_CXX_openmp"
+      cached: true
+      stdout: |
+        Change Dir: G:/LearningCG/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-cdat5s
+        
+        Run Build Command(s):D:/JetBrains/CLion 2023.2.2/bin/ninja/win/x64/ninja.exe -v cmTC_0a5bb && [1/2] "D:\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\cl.exe"  /nologo /TP   /DWIN32 /D_WINDOWS /EHsc -openmp /Ob0 /Od /RTC1 -std:c++17 -MDd -Zi /showIncludes /FoCMakeFiles\\cmTC_0a5bb.dir\\OpenMPTryFlag.cpp.obj /FdCMakeFiles\\cmTC_0a5bb.dir\\ /FS -c G:\\LearningCG\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-cdat5s\\OpenMPTryFlag.cpp
+        [2/2] cmd.exe /C "cd . && "D:\\JetBrains\\CLion 2023.2.2\\bin\\cmake\\win\\x64\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_0a5bb.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests  -- "D:\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\link.exe" /nologo CMakeFiles\\cmTC_0a5bb.dir\\OpenMPTryFlag.cpp.obj  /out:cmTC_0a5bb.exe /implib:cmTC_0a5bb.lib /pdb:cmTC_0a5bb.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cmd.exe /C "cd /D G:\\LearningCG\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-cdat5s && C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -noprofile -executionpolicy Bypass -file C:/Users/wmy/.vcpkg-clion/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary G:/LearningCG/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-cdat5s/cmTC_0a5bb.exe -installedDir C:/Users/wmy/.vcpkg-clion/vcpkg/installed/x64-windows/debug/bin -OutVariable out""
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "D:/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/FindOpenMP.cmake:419 (try_compile)"
+      - "D:/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/FindOpenMP.cmake:557 (_OPENMP_GET_SPEC_DATE)"
+      - "C:/Users/wmy/.vcpkg-clion/vcpkg/scripts/buildsystems/vcpkg.cmake:859 (_find_package)"
+      - "CMakeLists.txt:35 (find_package)"
+    description: "Detecting C OpenMP version"
+    directories:
+      source: "G:/LearningCG/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-mrm7kx"
+      binary: "G:/LearningCG/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-mrm7kx"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      VCPKG_APPLOCAL_DEPS: "ON"
+      VCPKG_TARGET_TRIPLET: "x64-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Users/wmy/.vcpkg-clion/vcpkg"
+    buildResult:
+      variable: "OpenMP_SPECTEST_C_"
+      cached: true
+      stdout: |
+        Change Dir: G:/LearningCG/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-mrm7kx
+        
+        Run Build Command(s):D:/JetBrains/CLion 2023.2.2/bin/ninja/win/x64/ninja.exe -v cmTC_b086c && [1/2] "D:\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\cl.exe"  /nologo   /DWIN32 /D_WINDOWS -openmp /Ob0 /Od /RTC1 -MDd -Zi /showIncludes /FoCMakeFiles\\cmTC_b086c.dir\\OpenMPCheckVersion.c.obj /FdCMakeFiles\\cmTC_b086c.dir\\ /FS -c G:\\LearningCG\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-mrm7kx\\OpenMPCheckVersion.c
+        [2/2] cmd.exe /C "cd . && "D:\\JetBrains\\CLion 2023.2.2\\bin\\cmake\\win\\x64\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_b086c.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests  -- "D:\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\link.exe" /nologo CMakeFiles\\cmTC_b086c.dir\\OpenMPCheckVersion.c.obj  /out:cmTC_b086c.exe /implib:cmTC_b086c.lib /pdb:cmTC_b086c.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cmd.exe /C "cd /D G:\\LearningCG\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-mrm7kx && C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -noprofile -executionpolicy Bypass -file C:/Users/wmy/.vcpkg-clion/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary G:/LearningCG/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-mrm7kx/cmTC_b086c.exe -installedDir C:/Users/wmy/.vcpkg-clion/vcpkg/installed/x64-windows/debug/bin -OutVariable out""
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "D:/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/FindOpenMP.cmake:419 (try_compile)"
+      - "D:/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/FindOpenMP.cmake:557 (_OPENMP_GET_SPEC_DATE)"
+      - "C:/Users/wmy/.vcpkg-clion/vcpkg/scripts/buildsystems/vcpkg.cmake:859 (_find_package)"
+      - "CMakeLists.txt:35 (find_package)"
+    description: "Detecting CXX OpenMP version"
+    directories:
+      source: "G:/LearningCG/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-xatljj"
+      binary: "G:/LearningCG/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-xatljj"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /EHsc"
+      CMAKE_CXX_FLAGS_DEBUG: "/Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      VCPKG_APPLOCAL_DEPS: "ON"
+      VCPKG_TARGET_TRIPLET: "x64-windows"
+      Z_VCPKG_ROOT_DIR: "C:/Users/wmy/.vcpkg-clion/vcpkg"
+    buildResult:
+      variable: "OpenMP_SPECTEST_CXX_"
+      cached: true
+      stdout: |
+        Change Dir: G:/LearningCG/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-xatljj
+        
+        Run Build Command(s):D:/JetBrains/CLion 2023.2.2/bin/ninja/win/x64/ninja.exe -v cmTC_d18b8 && [1/2] "D:\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\cl.exe"  /nologo /TP   /DWIN32 /D_WINDOWS /EHsc -openmp /Ob0 /Od /RTC1 -std:c++17 -MDd -Zi /showIncludes /FoCMakeFiles\\cmTC_d18b8.dir\\OpenMPCheckVersion.cpp.obj /FdCMakeFiles\\cmTC_d18b8.dir\\ /FS -c G:\\LearningCG\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-xatljj\\OpenMPCheckVersion.cpp
+        [2/2] cmd.exe /C "cd . && "D:\\JetBrains\\CLion 2023.2.2\\bin\\cmake\\win\\x64\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_d18b8.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests  -- "D:\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\link.exe" /nologo CMakeFiles\\cmTC_d18b8.dir\\OpenMPCheckVersion.cpp.obj  /out:cmTC_d18b8.exe /implib:cmTC_d18b8.lib /pdb:cmTC_d18b8.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cmd.exe /C "cd /D G:\\LearningCG\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-xatljj && C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -noprofile -executionpolicy Bypass -file C:/Users/wmy/.vcpkg-clion/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary G:/LearningCG/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-xatljj/cmTC_d18b8.exe -installedDir C:/Users/wmy/.vcpkg-clion/vcpkg/installed/x64-windows/debug/bin -OutVariable out""
+        
+      exitCode: 0
+...

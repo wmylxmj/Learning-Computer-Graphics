@@ -3,10 +3,12 @@
 #include <GLFW/glfw3.h>
 #include <vector>
 #include <set>
+#include "omp.h"
 
 #include "fileio.h"
 #include "camera.h"
 #include "obb.h"
+#include "bvh.h"
 
 #define WINDOW_WIDTH_INIT 1920
 #define WINDOW_HEIGHT_INIT 1080
@@ -71,19 +73,28 @@ void WindowResizeCallback(GLFWwindow *glfwWindow, int width, int height) {
     glViewport(0, 0, width, height);
 }
 
-class VertexLess{
-public:
-    bool operator() (const Vertex& vertexLeft, const Vertex& vertexRight) const {
-        if (vertexLeft.position.x != vertexRight.position.x) {
-            return vertexLeft.position.x < vertexRight.position.x;
-        }
-        if (vertexLeft.position.y != vertexRight.position.y) {
-            return vertexLeft.position.y < vertexRight.position.y;
-        }
-        return vertexLeft.position.z < vertexRight.position.z;
-    }
-};
 int main() {
+    Model model(R"(G:\LearnOpenGL-master\LearnOpenGL-master\resources\objects\backpack\backpack.obj)");
+    OrientedBoundingBox* obbs = new OrientedBoundingBox[model.meshes.size()];
+    std::vector<BVHNode>* bvhs = new std::vector<BVHNode>[model.meshes.size()];
+
+    std::cout << sizeof(std::vector<BVHNode>) << std::endl;
+    std::cout << "---------------------------" << std::endl;
+    //std::vector<OrientedBoundingBox> obbs();
+    //std::vector<std::vector<BVHNode>> bvhs;
+    omp_set_num_threads(128);
+#pragma omp parallel for
+    for (int i = 0; i < model.meshes.size(); i++) {
+        std::cout << i << std::endl;
+        obbs[i] = GenerateOBB(model.meshes[i].vertices, model.meshes[i].triangles);
+        bvhs[i] = buildBVH(model.meshes[i].vertices, model.meshes[i].triangles, 2);
+    }
+    std::cout << "12345678" << std::endl;
+    /*
+    Mesh mesh = model.meshes[56];
+    std::vector<BVHNode> nodes = buildBVH(model.meshes[56].vertices, model.meshes[56].triangles);
+    std::cout << nodes.size() << std::endl;
+    */
 
     if (!glfwInit()) {
         return -1;
@@ -96,6 +107,7 @@ int main() {
     }
 
     glfwMakeContextCurrent(glfwWindow);
+
     glfwSetFramebufferSizeCallback(glfwWindow, WindowResizeCallback);
     glfwSetCursorPosCallback(glfwWindow, MouseMoveCallback);
     glfwSetScrollCallback(glfwWindow, MouseScrollCallback);
@@ -106,16 +118,18 @@ int main() {
         return -1;
     }
 
-    Model model(R"(G:\LearnOpenGL-master\LearnOpenGL-master\resources\objects\backpack\backpack.obj)");
-    std::cout << model.meshes[0].triangles.size() << std::endl;
+    const GLubyte* version = glGetString(GL_VERSION);
+    printf("OpenGL Version: %s\n", version);
 
-    std::vector<OrientedBoundingBox> obbs;
-    for (Mesh mesh: model.meshes) {
-        obbs.push_back(GenerateOBB(mesh.vertices, mesh.triangles));
-    }
+    //ShaderProgram shader(R"(C:\Users\user\CLionProjects\CppCG\shader.vert)", R"(C:\Users\user\CLionProjects\CppCG\shader.frag)");
 
 
-    int index = 56;
+
+
+
+
+    int index_ud = 0;
+    int index_lr = 0;
 
     while(!glfwWindowShouldClose(glfwWindow)) {
         float currentFrame = static_cast<float>(glfwGetTime());
@@ -125,49 +139,48 @@ int main() {
         KeyboardInputProcessing(glfwWindow);
 
         if (glfwGetKey(glfwWindow, GLFW_KEY_UP) == GLFW_PRESS) {
-            index ++;
-            if (index >= model.meshes.size()) {
-                index = (int)model.meshes.size() - 1;
+            index_lr = 0;
+            index_ud ++;
+            if (index_ud >= model.meshes.size()) {
+                index_ud = (int)model.meshes.size() - 1;
             }
         }
         if (glfwGetKey(glfwWindow, GLFW_KEY_DOWN) == GLFW_PRESS) {
-            index --;
-            if (index < 0) {
-                index = 0;
+            index_lr = 0;
+            index_ud --;
+            if (index_ud < 0) {
+                index_ud = 0;
             }
         }
-        
+
+        if (glfwGetKey(glfwWindow, GLFW_KEY_RIGHT) == GLFW_PRESS) {
+            index_lr ++;
+            if (index_lr >= bvhs[index_ud].size()) {
+                index_lr = (int)bvhs[index_ud].size() - 1;
+            }
+        }
+        if (glfwGetKey(glfwWindow, GLFW_KEY_LEFT) == GLFW_PRESS) {
+            index_lr --;
+            if (index_lr < 0) {
+                index_lr = 0;
+            }
+        }
+
 
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // render the loaded model
         glm::mat4 matModel = glm::mat4(1.0f);
-        matModel = glm::translate(matModel, glm::vec3(0.0f, 0.0f, 0.0f));
+        matModel = glm::translate(matModel, glm::vec3(0.0f, 0.0f, -5.0f));
         matModel = glm::scale(matModel, glm::vec3(1.0f, 1.0f, 1.0f));
 
         glm::mat4 transMat = camera.GetPerspectiveMatrix() * camera.GetCameraMatrix() * matModel;
 
-        Mesh mesh = model.meshes[index];
-        OrientedBoundingBox obb = obbs[index];
-        std::set<Vertex, VertexLess> vertices;
-        //std::cout << index << std::endl;
-        /*
-        for (Triangle triangle: mesh.triangles) {
-            for (Vertex vertex: triangle.vertices) {
-                if (vertices.find(vertex) == vertices.end()) {
-                    vertices.insert(vertex);
-                }
-            }
-        }
-        glBegin(GL_POINTS);
-        for (Vertex vertex: vertices) {
-            glm::vec4 point(transMat * glm::vec4(vertex.position, 1));
-            glVertex2d(point[0]/point[3], point[1]/point[3]);
-        }
-        glEnd();
-        */
 
+        glUseProgram(0);
+        glColor4ub(255, 255, 255, 255);
+        Mesh mesh = model.meshes[index_ud];
         //for (Mesh mesh: model.meshes)
         {
             for (Triangle triangle: mesh.triangles) {
@@ -189,54 +202,56 @@ int main() {
                 }
                 glEnd();
 
-                /*
-                glBegin(GL_LINE_LOOP);
 
-                if (point0[2] < 0 && c + point0[2] > 0) {
-                    glVertex2d(point0[0]*c / -point0[2], point0[1]*c / -point0[2]);
-                }
-                if (point1[2] < 0 && c + point1[2] > 0) {
-                    glVertex2d(point1[0]*c / -point1[2], point1[1]*c / -point1[2]);
-                }
-                if (point2[2] < 0 && c + point2[2] > 0) {
-                    glVertex2d(point2[0]*c / -point2[2], point2[1]*c / -point2[2]);
+
+            }
+        }
+        glColor4ub(255, 255, 0, 255);
+        //for (std::vector<BVHNode> nodes: bvhs)
+        {
+            //std::vector<BVHNode> nodes = bvhs[index];
+            //for (BVHNode node: bvhs[index_ud])
+            {
+                //OrientedBoundingBox obb = node.obb;
+                OrientedBoundingBox obb = bvhs[index_ud][index_lr].obb;
+
+
+
+                //glUseProgram(shader.glID);
+                glm::vec4 p[8];
+                //glm::mat3 basis(obb.basis[0], obb.basis[1], obb.basis[2]);
+
+                p[0] = transMat * glm::vec4(obb.center + obb.basis * glm::vec3(-0.5*obb.size.x, -0.5*obb.size.y, -0.5*obb.size.z), 1);
+                p[1] = transMat * glm::vec4(obb.center + obb.basis * glm::vec3(+0.5*obb.size.x, -0.5*obb.size.y, -0.5*obb.size.z), 1);
+                p[2] = transMat * glm::vec4(obb.center + obb.basis * glm::vec3(+0.5*obb.size.x, +0.5*obb.size.y, -0.5*obb.size.z), 1);
+                p[3] = transMat * glm::vec4(obb.center + obb.basis * glm::vec3(-0.5*obb.size.x, +0.5*obb.size.y, -0.5*obb.size.z), 1);
+
+                p[4] = transMat * glm::vec4(obb.center + obb.basis * glm::vec3(-0.5*obb.size.x, -0.5*obb.size.y, +0.5*obb.size.z), 1);
+                p[5] = transMat * glm::vec4(obb.center + obb.basis * glm::vec3(+0.5*obb.size.x, -0.5*obb.size.y, +0.5*obb.size.z), 1);
+                p[6] = transMat * glm::vec4(obb.center + obb.basis * glm::vec3(+0.5*obb.size.x, +0.5*obb.size.y, +0.5*obb.size.z), 1);
+                p[7] = transMat * glm::vec4(obb.center + obb.basis * glm::vec3(-0.5*obb.size.x, +0.5*obb.size.y, +0.5*obb.size.z), 1);
+
+                glBegin(GL_LINE_LOOP);
+                for (int i = 0; i < 4; i++) {
+                    glVertex2d(p[i][0]/p[i][3], p[i][1]/p[i][3]);
                 }
                 glEnd();
-                */
-
+                glBegin(GL_LINE_LOOP);
+                for (int i = 4; i < 8; i++) {
+                    glVertex2d(p[i][0]/p[i][3], p[i][1]/p[i][3]);
+                }
+                glEnd();
+                for (int i = 0; i < 4; i++) {
+                    glBegin(GL_LINE_LOOP);
+                    glVertex2d(p[i][0]/p[i][3], p[i][1]/p[i][3]);
+                    glVertex2d(p[i+4][0]/p[i+4][3], p[i+4][1]/p[i+4][3]);
+                    glEnd();
+                }
             }
         }
 
 
-        glm::vec4 p[8];
-        //glm::mat3 basis(obb.basis[0], obb.basis[1], obb.basis[2]);
 
-        p[0] = transMat * glm::vec4(obb.center + obb.basis * glm::vec3(-0.5*obb.size.x, -0.5*obb.size.y, -0.5*obb.size.z), 1);
-        p[1] = transMat * glm::vec4(obb.center + obb.basis * glm::vec3(+0.5*obb.size.x, -0.5*obb.size.y, -0.5*obb.size.z), 1);
-        p[2] = transMat * glm::vec4(obb.center + obb.basis * glm::vec3(+0.5*obb.size.x, +0.5*obb.size.y, -0.5*obb.size.z), 1);
-        p[3] = transMat * glm::vec4(obb.center + obb.basis * glm::vec3(-0.5*obb.size.x, +0.5*obb.size.y, -0.5*obb.size.z), 1);
-
-        p[4] = transMat * glm::vec4(obb.center + obb.basis * glm::vec3(-0.5*obb.size.x, -0.5*obb.size.y, +0.5*obb.size.z), 1);
-        p[5] = transMat * glm::vec4(obb.center + obb.basis * glm::vec3(+0.5*obb.size.x, -0.5*obb.size.y, +0.5*obb.size.z), 1);
-        p[6] = transMat * glm::vec4(obb.center + obb.basis * glm::vec3(+0.5*obb.size.x, +0.5*obb.size.y, +0.5*obb.size.z), 1);
-        p[7] = transMat * glm::vec4(obb.center + obb.basis * glm::vec3(-0.5*obb.size.x, +0.5*obb.size.y, +0.5*obb.size.z), 1);
-
-        glBegin(GL_LINE_LOOP);
-        for (int i = 0; i < 4; i++) {
-            glVertex2d(p[i][0]/p[i][3], p[i][1]/p[i][3]);
-        }
-        glEnd();
-        glBegin(GL_LINE_LOOP);
-        for (int i = 4; i < 8; i++) {
-            glVertex2d(p[i][0]/p[i][3], p[i][1]/p[i][3]);
-        }
-        glEnd();
-        for (int i = 0; i < 4; i++) {
-            glBegin(GL_LINE_LOOP);
-            glVertex2d(p[i][0]/p[i][3], p[i][1]/p[i][3]);
-            glVertex2d(p[i+4][0]/p[i+4][3], p[i+4][1]/p[i+4][3]);
-            glEnd();
-        }
 
 
         glfwSwapBuffers(glfwWindow);

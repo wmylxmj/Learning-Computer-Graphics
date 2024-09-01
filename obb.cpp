@@ -8,20 +8,6 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-class VertexLess{
-public:
-    bool operator() (const Vertex& vertexLeft, const Vertex& vertexRight) const {
-        if (vertexLeft.position.x != vertexRight.position.x) {
-            return vertexLeft.position.x < vertexRight.position.x;
-        }
-        if (vertexLeft.position.y != vertexRight.position.y) {
-            return vertexLeft.position.y < vertexRight.position.y;
-        }
-        return vertexLeft.position.z < vertexRight.position.z;
-    }
-};
-
-
 OrientedBoundingBox GenerateOBB(const std::vector<Vertex>& vertices, const std::vector<Triangle>& triangles) {
     OrientedBoundingBox obb;
     std::set<unsigned int> vertexSet;
@@ -60,3 +46,17 @@ OrientedBoundingBox GenerateOBB(const std::vector<Vertex>& vertices, const std::
     obb.center = obb.basis * centerOBBCoord;
     return obb;
 }
+
+
+
+
+OrientedBoundingBoxStd430 OBB2OBBStd430(const OrientedBoundingBox &obb) {
+    OrientedBoundingBoxStd430 obb_std430;
+    obb_std430.basis[0] = glm::vec4(obb.basis[0], 1.0);
+    obb_std430.basis[1] = glm::vec4(obb.basis[1], 1.0);
+    obb_std430.basis[2] = glm::vec4(obb.basis[2], 1.0);
+    obb_std430.size = glm::vec4(obb.size, 0.0);
+    obb_std430.center = glm::vec4(obb.center, 1.0);
+    return obb_std430;
+}
+
