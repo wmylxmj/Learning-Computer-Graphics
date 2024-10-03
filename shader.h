@@ -2,8 +2,8 @@
 // Created by wmy on 2023/12/15.
 //
 
-#ifndef LEARNINGCG_SHADER_H
-#define LEARNINGCG_SHADER_H
+#ifndef SHADER_H
+#define SHADER_H
 
 #include <glad/glad.h>
 #include <glm/glm.hpp>
@@ -18,6 +18,7 @@ public:
     GLuint glID;
 
     void SetInt(const std::string &name, int value) const;
+    void SetUint(const std::string &name, unsigned int value) const;
     void SetFloat(const std::string &name, float value) const;
     void SetVec2(const std::string &name, const glm::vec2 &vec) const;
     void SetVec3(const std::string &name, const glm::vec3 &vec) const;
@@ -44,4 +45,4 @@ public:
     ShaderProgram(const char *pVertexShaderFile, const char *pFragmentShaderFile);
 };
 
-#endif //LEARNINGCG_SHADER_H
+#endif //SHADER_H

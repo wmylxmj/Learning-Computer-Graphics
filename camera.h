@@ -2,8 +2,8 @@
 // Created by wmy on 2023/12/16.
 //
 
-#ifndef LEARNINGCG_CAMERA_H
-#define LEARNINGCG_CAMERA_H
+#ifndef RTRT_CAMERA_H
+#define RTRT_CAMERA_H
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -31,4 +31,4 @@ public:
 };
 
 
-#endif //LEARNINGCG_CAMERA_H
+#endif //RTRT_CAMERA_H

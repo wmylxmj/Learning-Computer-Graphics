@@ -4,6 +4,7 @@
 
 #include "bvh.h"
 #include <algorithm>
+#include <execution>
 
 struct CompareTriangle {
     std::vector<Vertex> vertices;
@@ -14,10 +15,6 @@ public:
     CompareTriangle(const std::vector<Vertex>& vertices, const glm::mat3& basis, int axis) :
     vertices((vertices)) , basis(basis), axis(axis) {}
 
-
-
-
-
     bool operator()(const Triangle& l_triangle, const Triangle& r_triangle) const {
         const glm::vec3 l_center = (vertices[l_triangle.indices[0]].position + vertices[l_triangle.indices[1]].position + vertices[l_triangle.indices[2]].position) / 3.0f;
         const glm::vec3 r_center = (vertices[r_triangle.indices[0]].position + vertices[r_triangle.indices[1]].position + vertices[r_triangle.indices[2]].position) / 3.0f;
@@ -25,8 +22,6 @@ public:
         glm::vec3 r_basisCoord = glm::inverse(basis) * r_center;
         return l_basisCoord[axis] < r_basisCoord[axis];
     }
-
-
 };
 
 unsigned int buildBVHCore(const std::vector<Vertex>& vertices, std::vector<Triangle>& triangles, std::vector<BVHNode>& nodes, const unsigned int left, const unsigned int right, unsigned int maxNtris) {
@@ -43,7 +38,7 @@ unsigned int buildBVHCore(const std::vector<Vertex>& vertices, std::vector<Trian
     }
     int axis = nodes[index].obb.size[0] > nodes[index].obb.size[1] ? 0 : 1;
     axis = nodes[index].obb.size[axis] > nodes[index].obb.size[2] ? axis : 2;
-    std::sort(triangles.begin() + left, triangles.begin() + right, CompareTriangle(vertices, nodes[index].obb.basis, axis));
+    std::sort(std::execution::par, triangles.begin() + left, triangles.begin() + right, CompareTriangle(vertices, nodes[index].obb.basis, axis));
     const unsigned int mid = (left + right) / 2;
     nodes[index].leftChild = buildBVHCore(vertices, triangles, nodes, left, mid, maxNtris);
     nodes[index].rightChild = buildBVHCore(vertices, triangles, nodes, mid, right, maxNtris);

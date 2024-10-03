@@ -1,11 +1,10 @@
 #version 430 core
-layout (location = 0) in vec3 vertexPosition;
 
-uniform mat4 matModel;
-uniform mat4 matCamera;
-uniform mat4 matPerspective;
+layout (location = 0) in vec3 vertex_position;
 
-void main()
-{
-    gl_Position = matPerspective * matCamera * matModel * vec4(vertexPosition, 1.0);
+out vec2 pixel;
+
+void main() {
+    gl_Position = vec4(vertex_position, 1.0);
+    pixel = vertex_position.xy;
 }

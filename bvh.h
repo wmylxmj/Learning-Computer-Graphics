@@ -2,8 +2,8 @@
 // Created by user on 2024/8/28.
 //
 
-#ifndef LEARNINGCG_BVH_H
-#define LEARNINGCG_BVH_H
+#ifndef BVH_H
+#define BVH_H
 #include "obb.h"
 
 typedef struct {
@@ -25,4 +25,4 @@ typedef struct alignas(16) {
 extern BVHNodeStd430 BVHNode2BVHNodeStd430(const BVHNode& node);
 extern std::vector<BVHNodeStd430> BVHNodes2BVHNodesStd430(const std::vector<BVHNode>& nodes);
 
-#endif //LEARNINGCG_BVH_H
+#endif //BVH_H
