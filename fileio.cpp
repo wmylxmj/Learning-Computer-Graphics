@@ -10,7 +10,8 @@
 
 Model::Model(const std::string& pFile) {
     Assimp::Importer importer;
-    unsigned int pFlag = aiProcess_Triangulate;
+    unsigned int pFlag = aiProcess_Triangulate |
+                         aiProcess_JoinIdenticalVertices ;
 
     const aiScene *scene = importer.ReadFile(pFile, pFlag);
 
